@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.Data", "Mediscreen.Data\Mediscreen.Data.csproj", "{F88AC3EB-B6F5-42DA-91CB-1256C8D86462}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Mediscreen.Shared", "Mediscreen.Shared\Mediscreen.Shared.shproj", "{739CAAC2-D673-4638-891E-06E28ED574CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F88AC3EB-B6F5-42DA-91CB-1256C8D86462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F88AC3EB-B6F5-42DA-91CB-1256C8D86462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F88AC3EB-B6F5-42DA-91CB-1256C8D86462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F88AC3EB-B6F5-42DA-91CB-1256C8D86462}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4CF48B2-7C35-453E-989D-90A06F2CA590}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Mediscreen.Shared\Mediscreen.Shared.projitems*{739caac2-d673-4638-891e-06e28ed574ce}*SharedItemsImports = 13
+		Mediscreen.Shared\Mediscreen.Shared.projitems*{f88ac3eb-b6f5-42da-91cb-1256c8d86462}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal
