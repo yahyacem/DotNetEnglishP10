@@ -1,4 +1,4 @@
-using Mediscreen.Data.Services;
+using Mediscreen.Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

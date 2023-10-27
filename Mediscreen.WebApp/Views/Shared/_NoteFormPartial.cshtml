@@ -1,0 +1,19 @@
+﻿@model Mediscreen.WebApp.Models.NoteViewModel;
+@{
+    var r = Model;
+}
+
+<form asp-action="CreateNote" class="py-2">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="NotesRecommendations" class="control-label">Add notes / recommendations :</label>
+        <textarea asp-for="NotesRecommendations" class="form-control" ></textarea>
+        <span asp-validation-for="NotesRecommendations" class="text-danger"></span>
+    </div>
+    <div>
+        <input type="hidden" asp-for="PatientId" />
+    </div>
+    <div class="form-group mt-2">
+        <input type="submit" value="CreateNote" class="btn btn-primary" />
+    </div>
+</form>

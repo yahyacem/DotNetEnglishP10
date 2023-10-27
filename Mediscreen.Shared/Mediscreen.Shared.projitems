@@ -9,11 +9,14 @@
     <Import_RootNamespace>Mediscreen.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Patient.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Entities\Role.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Note.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SeedData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AssessmentModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BaseTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TriggerDetectedModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServiceExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings\MongoDbSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\TriggerTerm.cs" />
   </ItemGroup>
 </Project>
