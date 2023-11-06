@@ -1,12 +1,14 @@
 {
   "Routes": [
+
+    // Patient API
     {
       "DownstreamPathTemplate": "/api/patients/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6001
+          "Host": "mediscreen.patientapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/patients/{id}",
@@ -17,20 +19,22 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6001
+          "Host": "mediscreen.patientapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/patients",
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
+
+    // History API
     {
       "DownstreamPathTemplate": "/api/history/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6002
+          "Host": "mediscreen.historyapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/history/{id}",
@@ -41,20 +45,22 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6002
+          "Host": "mediscreen.historyapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/history",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     },
+
+    // Assessment API
     {
       "DownstreamPathTemplate": "/api/assessment/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6003
+          "Host": "mediscreen.assessmentapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/assessment/{id}",
@@ -62,6 +68,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
+    "BaseUrl": "http://localhost:80"
   }
 }

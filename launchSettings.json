@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "mediscreen.webapp": "StartDebugging",
+        "mediscreen.historyapi": "StartDebugging",
+        "mediscreen.assessmentapi": "StartDebugging",
+        "mediscreen.gatewayapi": "StartDebugging"
+      }
+    }
+  }
+}

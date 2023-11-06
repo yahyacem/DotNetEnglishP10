@@ -17,5 +17,13 @@ namespace Mediscreen.Shared.Services
         {
             services.AddHttpClient();
         }
+        public static void ConfigureRedis(this IServiceCollection services)
+        {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "redis:6379"; // redis is the container name of the redis service. 6379 is the default port
+                options.InstanceName = "SampleInstance";
+            });
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace Mediscreen.HistoryAPI.Repositories
             _historyCollection = mongoDatabase.GetCollection<Note>(
                 mongoDbConfig.Value.HistoryCollectionName);
         }
+        public async Task<List<Note>> GetAsync() =>
+            await _historyCollection.Find(_ => true).ToListAsync();
         public async Task<List<Note>> GetAsync(string id) =>
             await _historyCollection.Find(x => x.PatientId == id).ToListAsync();
         public async Task CreateAsync(Note newNote) =>

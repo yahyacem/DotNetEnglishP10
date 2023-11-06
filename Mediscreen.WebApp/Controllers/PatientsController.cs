@@ -51,7 +51,7 @@ namespace Mediscreen.WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,GivenName,FamillyName,DateOfBirth,Sex,HomeAddress,PhoneNumber")] PatientViewModel patientViewModel)
+        public async Task<IActionResult> Create([Bind("Id,GivenName,FamilyName,DateOfBirth,Sex,HomeAddress,PhoneNumber")] PatientViewModel patientViewModel)
         {
             if (!ModelState.IsValid)
                 return View();
@@ -92,7 +92,7 @@ namespace Mediscreen.WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,GivenName,FamillyName,DateOfBirth,Sex,HomeAddress,PhoneNumber")] PatientViewModel patientViewModel)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,GivenName,FamilyName,DateOfBirth,Sex,HomeAddress,PhoneNumber")] PatientViewModel patientViewModel)
         {
             if (!ModelState.IsValid)
             {

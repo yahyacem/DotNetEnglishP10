@@ -5,11 +5,6 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Mediscreen.Shared", "Mediscreen.Shared\Mediscreen.Shared.shproj", "{739CAAC2-D673-4638-891E-06E28ED574CE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{D0927254-C320-4F1B-AE31-0B5F3FEBC5C8}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.PatientAPI", "Mediscreen.PatientAPI\Mediscreen.PatientAPI.csproj", "{8208A798-499E-485F-B856-EA6A9B04B874}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.WebApp", "Mediscreen.WebApp\Mediscreen.WebApp.csproj", "{BCF7782F-B82A-4BB5-A04F-27593B2B6105}"
@@ -24,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.PatientAPI.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.AssessmentAPI", "Mediscreen.AssessmentAPI\Mediscreen.AssessmentAPI.csproj", "{33849674-7416-4F7A-82F0-29D85768BFD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediscreen.AssessmentAPI.Tests", "Mediscreen.AssessmentAPI.Tests\Mediscreen.AssessmentAPI.Tests.csproj", "{17DFF020-B21F-43E6-BCDD-A4F7E7487884}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mediscreen.AssessmentAPI.Tests", "Mediscreen.AssessmentAPI.Tests\Mediscreen.AssessmentAPI.Tests.csproj", "{17DFF020-B21F-43E6-BCDD-A4F7E7487884}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{BF67A96B-D4CA-4CE8-B80F-3FAE9E384B04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +61,10 @@ Global
 		{17DFF020-B21F-43E6-BCDD-A4F7E7487884}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17DFF020-B21F-43E6-BCDD-A4F7E7487884}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17DFF020-B21F-43E6-BCDD-A4F7E7487884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF67A96B-D4CA-4CE8-B80F-3FAE9E384B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF67A96B-D4CA-4CE8-B80F-3FAE9E384B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF67A96B-D4CA-4CE8-B80F-3FAE9E384B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF67A96B-D4CA-4CE8-B80F-3FAE9E384B04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

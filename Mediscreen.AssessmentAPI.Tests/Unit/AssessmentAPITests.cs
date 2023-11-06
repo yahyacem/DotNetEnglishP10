@@ -40,8 +40,9 @@ namespace Mediscreen.AssessmentAPI.Tests.Unit
             mockPatientsRepository.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(patient);
 
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
+            Mock<ITriggerTermsService> triggerTermsService = new();
             IAssessmentService assessmentService = new AssessmentService(mockTriggerTermsRepository.Object, mockHistoryRepository.Object);
-            AssessmentController assessmentController = new(patientsService, assessmentService);
+            AssessmentController assessmentController = new(patientsService, assessmentService, triggerTermsService.Object);
 
             // Act
             var result = await assessmentController.Get(patient.Id!);
@@ -67,8 +68,9 @@ namespace Mediscreen.AssessmentAPI.Tests.Unit
 
 
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
+            Mock<ITriggerTermsService> triggerTermsService = new();
             IAssessmentService assessmentService = new AssessmentService(mockTriggerTermsRepository.Object, mockHistoryRepository.Object);
-            AssessmentController assessmentController = new(patientsService, assessmentService);
+            AssessmentController assessmentController = new(patientsService, assessmentService, triggerTermsService.Object);
 
             // Act
             var result = await assessmentController.Get("");

@@ -22,12 +22,13 @@ namespace Mediscreen.WebApp.Services
         }
         public async Task<List<PatientViewModel>> GetPatientsAsync()
         {
-            // Create new HTTP client
-            var _httpClient = _httpClientFactory.CreateClient();
-
             List<Patient> patientEntities = new();
 
-            var response = await _httpClient.GetAsync($"{_apiUrl}/api/patients");
+            // Create new HTTP client
+            var _httpClient = _httpClientFactory.CreateClient();
+            _httpClient.BaseAddress = new Uri(_apiUrl);
+            
+            var response = await _httpClient.GetAsync("api/patients");
             if (response.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -49,16 +50,16 @@ namespace Mediscreen.WebApp.Services
         {
             // Create new HTTP client
             var _httpClient = _httpClientFactory.CreateClient();
+            _httpClient.BaseAddress = new Uri(_apiUrl);
 
-            Patient patientEntity = new();
             PatientViewModel patientViewModel = null!;
 
-            var patientResponse = await _httpClient.GetAsync($"{_apiUrl}/api/patients/{id}");
+            var patientResponse = await _httpClient.GetAsync($"api/patients/{id}");
             if (patientResponse.IsSuccessStatusCode)
             {
                 // Deserialize result
                 string apiResponse = await patientResponse.Content.ReadAsStringAsync();
-                patientEntity = JsonConvert.DeserializeObject<Patient>(apiResponse)!;
+                Patient patientEntity = JsonConvert.DeserializeObject<Patient>(apiResponse)!;
 
                 // Map entity to view model
                 patientViewModel = _mapper.Map<PatientViewModel>(patientEntity);
@@ -67,8 +68,7 @@ namespace Mediscreen.WebApp.Services
             if (patientViewModel == null)
                 return patientViewModel;
 
-            List<Note> historyEntity = new();
-            var historyResponse = await _httpClient.GetAsync($"{_apiUrl}/api/history/{id}");
+            var historyResponse = await _httpClient.GetAsync($"api/history/{id}");
             if (historyResponse.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -82,6 +82,7 @@ namespace Mediscreen.WebApp.Services
         {
             // Create new HTTP client
             var _httpClient = _httpClientFactory.CreateClient();
+            _httpClient.BaseAddress = new Uri(_apiUrl);
 
             Patient patientEntity = _mapper.Map<Patient>(patientViewModel);
             patientEntity.Id = null;
@@ -89,7 +90,7 @@ namespace Mediscreen.WebApp.Services
             var patientJson = JsonConvert.SerializeObject(patientEntity);
             var requestContent = new StringContent(patientJson, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{_apiUrl}/api/patients", requestContent);
+            var response = await _httpClient.PostAsync("api/patients", requestContent);
             if (response.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -106,10 +107,11 @@ namespace Mediscreen.WebApp.Services
         {
             // Create new HTTP client
             var _httpClient = _httpClientFactory.CreateClient();
+            _httpClient.BaseAddress = new Uri(_apiUrl);
 
             AssessmentModel assessmentModel = new();
 
-            var assessmentResponse = await _httpClient.GetAsync($"{_apiUrl}/api/assessment/{id}");
+            var assessmentResponse = await _httpClient.GetAsync($"api/assessment/{id}");
             if (assessmentResponse.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -123,13 +125,14 @@ namespace Mediscreen.WebApp.Services
         {
             // Create new HTTP client
             var _httpClient = _httpClientFactory.CreateClient();
+            _httpClient.BaseAddress = new Uri(_apiUrl);
 
             Note noteEntity = _mapper.Map<Note>(newNote);
             noteEntity.Id = null;
 
             var noteJson = JsonConvert.SerializeObject(newNote);
             var requestContent = new StringContent(noteJson, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync($"{_apiUrl}/api/history", requestContent);
+            var response = await _httpClient.PostAsync($"api/history", requestContent);
 
             return response.IsSuccessStatusCode;
         }
@@ -137,13 +140,14 @@ namespace Mediscreen.WebApp.Services
         {
             // Create new HTTP client
             var _httpClient = _httpClientFactory.CreateClient();
+            _httpClient.BaseAddress = new Uri(_apiUrl);
 
             Patient patientEntity = _mapper.Map<Patient>(patientViewModel);
 
             var patientJson = JsonConvert.SerializeObject(patientEntity);
             var requestContent = new StringContent(patientJson, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"{_apiUrl}/api/patients/{patientEntity.Id}", requestContent);
+            var response = await _httpClient.PutAsync($"api/patients/{patientEntity.Id}", requestContent);
             if (response.IsSuccessStatusCode)
             {
                 return true;
@@ -155,8 +159,9 @@ namespace Mediscreen.WebApp.Services
         {
             // Create new HTTP client
             var _httpClient = _httpClientFactory.CreateClient();
+            _httpClient.BaseAddress = new Uri(_apiUrl);
 
-            var response = await _httpClient.DeleteAsync($"{_apiUrl}/api/patients/{id}");
+            var response = await _httpClient.DeleteAsync($"api/patients/{id}");
             if (response.IsSuccessStatusCode)
             {
                 return true;

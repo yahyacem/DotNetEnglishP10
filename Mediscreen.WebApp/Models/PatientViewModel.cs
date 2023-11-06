@@ -12,15 +12,16 @@ namespace Mediscreen.WebApp.Models
         [DisplayName("Given name")]
         [Required]
         public string GivenName { get; set; } = null!;
-        [DisplayName("Familly name")]
+        [DisplayName("Family name")]
         [Required]
-        public string FamillyName { get; set; } = null!;
+        public string FamilyName { get; set; } = null!;
         [DisplayName("Date of birth")]
         [DataType(DataType.Date)]
         [DateBeforeNow(ErrorMessage = "Date cannot be after now")]
         [Required]
         public DateTime DateOfBirth { get; set; }
         [DisplayName("Sex")]
+        [StringLength(1, MinimumLength = 1,  ErrorMessage = "Sex can only be M or F")]
         [Required]
         public string Sex { get; set; } = null!;
         [DisplayName("Home address")]

@@ -16,6 +16,10 @@ namespace Mediscreen.HistoryAPI.Controllers
             _historyService = historyService;
             _patientsService = patientsService;
         }
+        [HttpGet]
+        public async Task<ActionResult<List<Note>>> Get() =>
+            await _historyService.GetAsync();
+
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<List<Note>>> Get(string id)
         {

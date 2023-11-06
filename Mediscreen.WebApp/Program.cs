@@ -10,6 +10,8 @@ builder.Services.ConfigureMapper();
 builder.Services.ConfigureHttpClient();
 builder.Services.AddScoped<IApiService, ApiService>();
 
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -22,7 +24,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

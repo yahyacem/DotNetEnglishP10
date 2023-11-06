@@ -12,6 +12,10 @@ builder.Services.AddSingleton<IPatientsService, PatientsService>();
 builder.Services.AddSingleton<IHistoryRepository, HistoryRepository>();
 builder.Services.AddSingleton<IHistoryService, HistoryService>();
 
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -25,8 +29,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

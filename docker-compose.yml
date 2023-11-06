@@ -1,12 +1,122 @@
-version: "7.0"
+version: '3.4'
+
+networks:
+  backend:
+    driver: bridge
 
 services:
-  mongo:
+  mediscreendb:
+    container_name: ${DB_HOST}
     image: mongo
-    container_name: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME}
     ports:
-      - 27017:27017
+      -  27017:27017
+    networks:
+      - backend
     volumes:
-      - mongodbdata:/data/db
-volumes:
-  mongodbdata:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  mediscreen.gatewayapi:
+    container_name: ${GATEWAY_HOST}
+    image: ${DOCKER_REGISTRY-}mediscreengatewayapi
+    build:
+      context: .
+      dockerfile: Mediscreen.GatewayAPI/Dockerfile
+    ports:
+      - 81:80
+    networks:
+      - backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Password.123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+
+  mediscreen.patientapi:
+    container_name: patient-api
+    image: ${DOCKER_REGISTRY-}mediscreenpatientapi
+    build:
+      context: .
+      dockerfile: Mediscreen.PatientAPI/Dockerfile
+    ports:
+      - 82:80
+    networks:
+      - backend         
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Password.123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ${ASPNET_DB_HOST}
+      - ${ASPNET_DB_PORT}
+      - ${ASPNET_DB_NAME}
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      
+  mediscreen.historyapi:
+    container_name: history-api
+    image: ${DOCKER_REGISTRY-}mediscreenhistoryapi
+    build:
+      context: .
+      dockerfile: Mediscreen.HistoryAPI/Dockerfile
+    ports:
+      - 83:80
+    networks:
+      - backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Password.123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ${ASPNET_DB_HOST}
+      - ${ASPNET_DB_PORT}
+      - ${ASPNET_DB_NAME}
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      
+  mediscreen.assessmentapi:
+    container_name: assessment-api
+    image: ${DOCKER_REGISTRY-}mediscreenassessmentapi
+    build:
+      context: .
+      dockerfile: Mediscreen.AssessmentAPI/Dockerfile
+    ports:
+      - 84:80
+    networks:
+      - backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Password.123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ${ASPNET_DB_HOST}
+      - ${ASPNET_DB_PORT}
+      - ${ASPNET_DB_NAME}
+    volumes:
+      - ~/.aspnet/https:/https:ro
+
+  mediscreen.webapp:
+    container_name: webapp-api
+    image: ${DOCKER_REGISTRY-}mediscreenwebapp
+    build:
+      context: .
+      dockerfile: Mediscreen.WebApp/Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Password.123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ApiGateway=http://${GATEWAY_HOST}:${GATEWAY_PORT}/
+    volumes:
+      - ~/.aspnet/https:/https:ro
+
+  redis:
+    image: redis

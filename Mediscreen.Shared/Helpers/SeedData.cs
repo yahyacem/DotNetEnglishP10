@@ -17,7 +17,7 @@ namespace Mediscreen.Shared.Helpers
             {
                 Id = ObjectId.GenerateNewId().ToString(),
                 GivenName = "Given Name",
-                FamillyName = "Family Name",
+                FamilyName = "Family Name",
                 DateOfBirth = DateTime.Now.AddYears(rand.Next(-70, 18)),
                 Sex = rand.Next(0, 1) == 0 ? "Male" : "Female",
                 HomeAddress = "Home Address",

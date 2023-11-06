@@ -15,6 +15,9 @@ namespace Mediscreen.Shared.Models
         public string RiskLevel { get => AssessRiskLevel(); }
         private string AssessRiskLevel()
         {
+            if (Patient == null)
+                return "None";
+
             // Patient over 30
             if (DateTime.Now.Year - Patient.DateOfBirth.Year > 30)
             {
@@ -33,7 +36,7 @@ namespace Mediscreen.Shared.Models
 
             // Patient under 30
 
-            if (Patient.Sex == "Female")
+            if (Patient.Sex == "F")
             {
                 // Patient is female
                 switch (TriggersDetected.Count)

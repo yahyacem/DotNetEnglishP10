@@ -13,7 +13,7 @@ namespace Mediscreen.Shared.Entities
         [Required]
         public string GivenName { get; set; } = null!;
         [Required]
-        public string FamillyName { get; set; } = null!;
+        public string FamilyName { get; set; } = null!;
         public DateTime _dateOfBirth { get; set; }
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         [Required]

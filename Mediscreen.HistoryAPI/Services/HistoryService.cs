@@ -10,6 +10,8 @@ namespace Mediscreen.HistoryAPI.Services
         {
             _historyRepository = historyRepository;
         }
+        public async Task<List<Note>> GetAsync() =>
+            await _historyRepository.GetAsync();
         public async Task<List<Note>> GetAsync(string id) =>
             await _historyRepository.GetAsync(id);
         public async Task CreateAsync(Note newNote)
