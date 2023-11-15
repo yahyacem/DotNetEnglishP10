@@ -7,9 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Mediscreen.WebApp.Models;
 using Mediscreen.WebApp.Services;
 using Mediscreen.Shared.Entities;
+using Microsoft.Identity.Abstractions;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
 
 namespace Mediscreen.WebApp.Controllers
 {
+    
     public class PatientsController : Controller
     {
         private readonly IApiService _apiService;
@@ -53,6 +58,9 @@ namespace Mediscreen.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,GivenName,FamilyName,DateOfBirth,Sex,HomeAddress,PhoneNumber")] PatientViewModel patientViewModel)
         {
+            if (patientViewModel.Sex != "M" || patientViewModel.Sex != "F")
+                ModelState.AddModelError("Sex", "Please, provide a valid sex (M or F)");
+
             if (!ModelState.IsValid)
                 return View();
 
@@ -94,10 +102,12 @@ namespace Mediscreen.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,GivenName,FamilyName,DateOfBirth,Sex,HomeAddress,PhoneNumber")] PatientViewModel patientViewModel)
         {
+            if (patientViewModel.Sex != "M" || patientViewModel.Sex != "F")
+                ModelState.AddModelError("Sex", "Please, provide a valid sex (M or F)");
+
             if (!ModelState.IsValid)
-            {
                 return View();
-            }
+
             patientViewModel.Id = id;
             var result = await _apiService.EditPatientAsync(patientViewModel);
             if (!result)

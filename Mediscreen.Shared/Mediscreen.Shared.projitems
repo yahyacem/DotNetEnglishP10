@@ -15,7 +15,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\AssessmentModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\TriggerDetectedModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ITokenProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServiceExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\TokenProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings\MongoDbSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\TriggerTerm.cs" />
   </ItemGroup>

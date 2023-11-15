@@ -32,8 +32,11 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_Kestrel__Certificates__Default__Password=Password.123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - USER_SECRETS_ID=0b37454a-7637-4cb5-86fb-7f3d1f6741ef
     volumes:
       - ~/.aspnet/https:/https:ro
+      - $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
+      - $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
 
   mediscreen.patientapi:
     container_name: patient-api
@@ -53,8 +56,11 @@ services:
       - ${ASPNET_DB_HOST}
       - ${ASPNET_DB_PORT}
       - ${ASPNET_DB_NAME}
+      - USER_SECRETS_ID=89782eda-456a-472a-8aa9-72288bb8c2dc
     volumes:
       - ~/.aspnet/https:/https:ro
+      - $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
+      - $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
       
   mediscreen.historyapi:
     container_name: history-api
@@ -74,8 +80,11 @@ services:
       - ${ASPNET_DB_HOST}
       - ${ASPNET_DB_PORT}
       - ${ASPNET_DB_NAME}
+      - USER_SECRETS_ID=820ea045-4298-4817-b31f-228364fae513
     volumes:
       - ~/.aspnet/https:/https:ro
+      - $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
+      - $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
       
   mediscreen.assessmentapi:
     container_name: assessment-api
@@ -95,8 +104,11 @@ services:
       - ${ASPNET_DB_HOST}
       - ${ASPNET_DB_PORT}
       - ${ASPNET_DB_NAME}
+      - USER_SECRETS_ID=ca4170af-bd13-457e-89b5-98882a4dc44e
     volumes:
       - ~/.aspnet/https:/https:ro
+      - $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
+      - $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
 
   mediscreen.webapp:
     container_name: webapp-api
@@ -105,7 +117,7 @@ services:
       context: .
       dockerfile: Mediscreen.WebApp/Dockerfile
     ports:
-      - 80:80
+      - 8080:8080
       - 443:443
     networks:
       - backend
@@ -115,8 +127,11 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=Password.123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ApiGateway=http://${GATEWAY_HOST}:${GATEWAY_PORT}/
+      - USER_SECRETS_ID=22a797d4-7b13-4780-abd0-74f5e2994ef3
     volumes:
       - ~/.aspnet/https:/https:ro
+      - $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
+      - $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
 
   redis:
     image: redis

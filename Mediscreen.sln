@@ -73,6 +73,7 @@ Global
 		SolutionGuid = {C4CF48B2-7C35-453E-989D-90A06F2CA590}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Mediscreen.Shared\Mediscreen.Shared.projitems*{0c74090e-62c3-444b-97bc-49b32ec1e8c6}*SharedItemsImports = 5
 		Mediscreen.Shared\Mediscreen.Shared.projitems*{33849674-7416-4f7a-82f0-29d85768bfd1}*SharedItemsImports = 5
 		Mediscreen.Shared\Mediscreen.Shared.projitems*{5ddd18b5-b3bc-44d6-b086-db5233a07ede}*SharedItemsImports = 5
 		Mediscreen.Shared\Mediscreen.Shared.projitems*{739caac2-d673-4638-891e-06e28ed574ce}*SharedItemsImports = 13

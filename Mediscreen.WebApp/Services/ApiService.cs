@@ -2,33 +2,45 @@
 using Mediscreen.Shared.Entities;
 using Mediscreen.Shared.Models;
 using Mediscreen.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Abstractions;
+using Microsoft.Identity.Web;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Reflection.Metadata;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Mediscreen.Shared.Services;
+using Microsoft.Identity.Client;
+using static System.Formats.Asn1.AsnWriter;
+using Microsoft.Identity.Web.Resource;
+using Azure.Core;
+using Microsoft.Extensions.Options;
 
 namespace Mediscreen.WebApp.Services
 {
     public class ApiService : IApiService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IMapper _mapper;
-        private readonly string _apiUrl;
-        public ApiService(IHttpClientFactory httpClientFactory, IMapper mapper, IConfiguration configuration)
+        private IDownstreamApi _downstreamApi;
+        private readonly ConstantsService _constantsService;
+        public ApiService(IMapper mapper, IDownstreamApi downstreamApi, ConstantsService constantsService, IConfiguration configuration)
         {
-            _httpClientFactory = httpClientFactory;
             _mapper = mapper;
-            _apiUrl = configuration["ApiGateway"]!;
+            _downstreamApi = downstreamApi;
+            _constantsService = constantsService;
         }
         public async Task<List<PatientViewModel>> GetPatientsAsync()
         {
             List<Patient> patientEntities = new();
 
-            // Create new HTTP client
-            var _httpClient = _httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(_apiUrl);
-            
-            var response = await _httpClient.GetAsync("api/patients");
+            var response = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options => 
+            { 
+                options.RelativePath = $"api/patients";
+                options.Scopes = new[] { _constantsService.Scopes["PatientAPI"] };
+            });
             if (response.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -48,13 +60,13 @@ namespace Mediscreen.WebApp.Services
         }
         public async Task<PatientViewModel?> GetPatientAsync(string id)
         {
-            // Create new HTTP client
-            var _httpClient = _httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(_apiUrl);
-
             PatientViewModel patientViewModel = null!;
 
-            var patientResponse = await _httpClient.GetAsync($"api/patients/{id}");
+            var patientResponse = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options => 
+            {
+                options.RelativePath = $"api/patients/{id}";
+                options.Scopes = new[] { _constantsService.Scopes["PatientAPI"] };
+            });
             if (patientResponse.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -68,7 +80,11 @@ namespace Mediscreen.WebApp.Services
             if (patientViewModel == null)
                 return patientViewModel;
 
-            var historyResponse = await _httpClient.GetAsync($"api/history/{id}");
+            var historyResponse = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options => 
+            { 
+                options.RelativePath = $"api/history/{id}";
+                options.Scopes = new[] { _constantsService.Scopes["HistoryAPI"] };
+            });
             if (historyResponse.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -81,16 +97,18 @@ namespace Mediscreen.WebApp.Services
         public async Task<PatientViewModel?> CreatePatientAsync(PatientViewModel patientViewModel)
         {
             // Create new HTTP client
-            var _httpClient = _httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(_apiUrl);
-
             Patient patientEntity = _mapper.Map<Patient>(patientViewModel);
             patientEntity.Id = null;
 
             var patientJson = JsonConvert.SerializeObject(patientEntity);
             var requestContent = new StringContent(patientJson, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("api/patients", requestContent);
+            var response = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options =>
+            {
+                options.RelativePath = "api/patients";
+                options.HttpMethod = "POST";
+                options.Scopes = new[] { _constantsService.Scopes["PatientAPI"] };
+            }, requestContent);
             if (response.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -105,13 +123,13 @@ namespace Mediscreen.WebApp.Services
         }
         public async Task<AssessmentModel?> GetAssessmentAsync(string id)
         {
-            // Create new HTTP client
-            var _httpClient = _httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(_apiUrl);
-
             AssessmentModel assessmentModel = new();
 
-            var assessmentResponse = await _httpClient.GetAsync($"api/assessment/{id}");
+            var assessmentResponse = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options => 
+            { 
+                options.RelativePath = $"api/assessment/{id}";
+                options.Scopes = new[] { _constantsService.Scopes["AssessmentAPI"] };
+            });
             if (assessmentResponse.IsSuccessStatusCode)
             {
                 // Deserialize result
@@ -123,31 +141,34 @@ namespace Mediscreen.WebApp.Services
         }
         public async Task<bool> CreateNoteAsync(NoteViewModel newNote)
         {
-            // Create new HTTP client
-            var _httpClient = _httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(_apiUrl);
-
             Note noteEntity = _mapper.Map<Note>(newNote);
             noteEntity.Id = null;
 
             var noteJson = JsonConvert.SerializeObject(newNote);
             var requestContent = new StringContent(noteJson, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync($"api/history", requestContent);
+
+            var response = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options =>
+            {
+                options.RelativePath = "api/history";
+                options.HttpMethod = "POST";
+                options.Scopes = new[] { _constantsService.Scopes["HistoryAPI"] };
+            }, requestContent);
 
             return response.IsSuccessStatusCode;
         }
         public async Task<bool> EditPatientAsync(PatientViewModel patientViewModel)
         {
-            // Create new HTTP client
-            var _httpClient = _httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(_apiUrl);
-
             Patient patientEntity = _mapper.Map<Patient>(patientViewModel);
 
             var patientJson = JsonConvert.SerializeObject(patientEntity);
             var requestContent = new StringContent(patientJson, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"api/patients/{patientEntity.Id}", requestContent);
+            var response = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options =>
+            {
+                options.RelativePath = $"api/patients/{patientEntity.Id}";
+                options.HttpMethod = "PUT";
+                options.Scopes = new[] { _constantsService.Scopes["PatientAPI"] };
+            }, requestContent);
             if (response.IsSuccessStatusCode)
             {
                 return true;
@@ -157,16 +178,17 @@ namespace Mediscreen.WebApp.Services
         }
         public async Task<bool> DeletePatientAsync(string id)
         {
-            // Create new HTTP client
-            var _httpClient = _httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(_apiUrl);
-
-            var response = await _httpClient.DeleteAsync($"api/patients/{id}");
+            var response = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options =>
+            {
+                options.RelativePath = $"api/patients/{id}";
+                options.HttpMethod = "DELETE";
+                options.Scopes = new[] { _constantsService.Scopes["PatientAPI"] };
+            });
             if (response.IsSuccessStatusCode)
             {
                 return true;
             }
-            
+
             return false;
         }
     }

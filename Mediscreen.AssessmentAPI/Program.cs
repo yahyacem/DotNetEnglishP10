@@ -1,6 +1,7 @@
 using Mediscreen.AssessmentAPI.Repositories;
 using Mediscreen.AssessmentAPI.Services;
 using Mediscreen.Shared.Services;
+using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -17,6 +18,9 @@ builder.Services.AddSingleton<IAssessmentService, AssessmentService>();
 builder.Services.AddSingleton<ITriggerTermsService, TriggerTermsService>();
 
 builder.Configuration.AddEnvironmentVariables();
+
+// Adds Microsoft Identity platform (AAD v2.0) support to protect this Api
+builder.Services.AddMicrosoftIdentityWebApiAuthentication(configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

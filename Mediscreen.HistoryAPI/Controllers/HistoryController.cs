@@ -1,10 +1,14 @@
 ﻿using Mediscreen.HistoryAPI.Services;
 using Mediscreen.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 
 namespace Mediscreen.HistoryAPI.Controllers
 {
+    [Authorize]
+    [RequiredScopeOrAppPermission(AcceptedAppPermission = new[] { "History.Admin" })]
     [Route("api/[controller]")]
     [ApiController]
     public class HistoryController : Controller
