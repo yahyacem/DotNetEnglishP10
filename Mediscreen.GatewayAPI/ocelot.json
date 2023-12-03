@@ -1,6 +1,42 @@
 {
   "Routes": [
 
+    // History API
+    {
+      "DownstreamPathTemplate": "/api/patients/{id}/history",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "mediscreen.historyapi",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/patients/{id}/history",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    // Assessment API
+    {
+      "DownstreamPathTemplate": "/api/patients/{id}/assessment",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "mediscreen.assessmentapi",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/patients/{id}/assessment",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
     // Patient API
     {
       "DownstreamPathTemplate": "/api/patients/{id}",
@@ -29,58 +65,6 @@
       ],
       "UpstreamPathTemplate": "/api/patients",
       "UpstreamHttpMethod": [ "GET", "POST" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
-    },
-
-    // History API
-    {
-      "DownstreamPathTemplate": "/api/patients/{id}/history",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "mediscreen.historyapi",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/patients/{id}/history",
-      "UpstreamHttpMethod": [ "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/api/history",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "mediscreen.historyapi",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/history",
-      "UpstreamHttpMethod": [ "GET", "POST" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
-    },
-
-    // Assessment API
-    {
-      "DownstreamPathTemplate": "/api/assessment/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "mediscreen.assessmentapi",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/assessment/{id}",
-      "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []

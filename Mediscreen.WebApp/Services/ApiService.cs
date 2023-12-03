@@ -26,7 +26,7 @@ namespace Mediscreen.WebApp.Services
         private readonly IMapper _mapper;
         private IDownstreamApi _downstreamApi;
         private readonly ConstantsService _constantsService;
-        public ApiService(IMapper mapper, IDownstreamApi downstreamApi, ConstantsService constantsService, IConfiguration configuration)
+        public ApiService(IMapper mapper, IDownstreamApi downstreamApi, ConstantsService constantsService)
         {
             _mapper = mapper;
             _downstreamApi = downstreamApi;
@@ -127,7 +127,7 @@ namespace Mediscreen.WebApp.Services
 
             var assessmentResponse = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options => 
             { 
-                options.RelativePath = $"api/assessment/{id}";
+                options.RelativePath = $"api/patients/{id}/assessment";
                 options.Scopes = new[] { _constantsService.Scopes["AssessmentAPI"] };
             });
             if (assessmentResponse.IsSuccessStatusCode)
