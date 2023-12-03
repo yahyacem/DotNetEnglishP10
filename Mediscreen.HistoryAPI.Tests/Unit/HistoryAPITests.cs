@@ -31,10 +31,10 @@ namespace Mediscreen.Tests.API
 
             IHistoryService historyService = new HistoryService(mockHistoryRepository.Object);
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
-            HistoryController historyController = new(historyService, patientsService);
+            PatientsController patientsController = new(historyService, patientsService);
 
             // Act
-            var result = await historyController.Get("");
+            var result = await patientsController.Get("");
 
             // Assert
             Assert.IsType<List<Note>>(result.Value);
@@ -53,10 +53,10 @@ namespace Mediscreen.Tests.API
 
             IHistoryService historyService = new HistoryService(mockHistoryRepository.Object);
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
-            HistoryController historyController = new(historyService, patientsService);
+            PatientsController patientsController = new(historyService, patientsService);
 
             // Act
-            var result = await historyController.Get("");
+            var result = await patientsController.Get("");
 
             // Assert
             Assert.IsType<NotFoundResult>(result.Result);
@@ -76,10 +76,10 @@ namespace Mediscreen.Tests.API
 
             IHistoryService historyService = new HistoryService(mockHistoryRepository.Object);
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
-            HistoryController historyController = new(historyService, patientsService);
+            PatientsController patientsController = new(historyService, patientsService);
 
             // Act
-            var result = await historyController.Post(note);
+            var result = await patientsController.Post(note.PatientId, note);
 
             // Assert
             Assert.IsType<CreatedAtActionResult>(result);
@@ -99,11 +99,11 @@ namespace Mediscreen.Tests.API
 
             IHistoryService historyService = new HistoryService(mockHistoryRepository.Object);
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
-            HistoryController historyController = new(historyService, patientsService);
-            historyController.ModelState.AddModelError("Error", "Error");
+            PatientsController patientsController = new(historyService, patientsService);
+            patientsController.ModelState.AddModelError("Error", "Error");
 
             // Act
-            var result = await historyController.Post(note);
+            var result = await patientsController.Post(note.PatientId, note);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(result);
@@ -123,10 +123,10 @@ namespace Mediscreen.Tests.API
 
             IHistoryService historyService = new HistoryService(mockHistoryRepository.Object);
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
-            HistoryController historyController = new(historyService, patientsService);
+            PatientsController patientsController = new(historyService, patientsService);
 
             // Act
-            var result = await historyController.Post(note);
+            var result = await patientsController.Post(note.PatientId, note);
 
             // Assert
             Assert.IsType<NotFoundResult>(result);

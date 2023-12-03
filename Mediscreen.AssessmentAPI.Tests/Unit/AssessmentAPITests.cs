@@ -42,10 +42,10 @@ namespace Mediscreen.AssessmentAPI.Tests.Unit
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
             Mock<ITriggerTermsService> triggerTermsService = new();
             IAssessmentService assessmentService = new AssessmentService(mockTriggerTermsRepository.Object, mockHistoryRepository.Object);
-            AssessmentController assessmentController = new(patientsService, assessmentService, triggerTermsService.Object);
+            PatientsController patientsController = new(patientsService, assessmentService);
 
             // Act
-            var result = await assessmentController.Get(patient.Id!);
+            var result = await patientsController.Get(patient.Id!);
 
             // Assert
             Assert.IsType<AssessmentModel>(result.Value);
@@ -70,10 +70,10 @@ namespace Mediscreen.AssessmentAPI.Tests.Unit
             IPatientsService patientsService = new PatientsService(mockPatientsRepository.Object);
             Mock<ITriggerTermsService> triggerTermsService = new();
             IAssessmentService assessmentService = new AssessmentService(mockTriggerTermsRepository.Object, mockHistoryRepository.Object);
-            AssessmentController assessmentController = new(patientsService, assessmentService, triggerTermsService.Object);
+            PatientsController patientsController = new(patientsService, assessmentService);
 
             // Act
-            var result = await assessmentController.Get("");
+            var result = await patientsController.Get("");
 
             // Assert
             Assert.IsType<NotFoundResult>(result.Result);
