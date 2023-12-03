@@ -11,20 +11,17 @@ namespace Mediscreen.HistoryAPI.Controllers
     [RequiredScopeOrAppPermission(AcceptedAppPermission = new[] { "History.Admin" })]
     [Route("api/[controller]")]
     [ApiController]
-    public class HistoryController : Controller
+    public class PatientsController : Controller
     {
         private readonly IHistoryService _historyService;
         private readonly IPatientsService _patientsService;
-        public HistoryController(IHistoryService historyService, IPatientsService patientsService)
+        public PatientsController(IHistoryService historyService, IPatientsService patientsService)
         {
             _historyService = historyService;
             _patientsService = patientsService;
         }
-        [HttpGet]
-        public async Task<ActionResult<List<Note>>> Get() =>
-            await _historyService.GetAsync();
-
-        [HttpGet("{id:length(24)}")]
+        // GET api/patients/{id}/history
+        [HttpGet("{id:length(24)}/history")]
         public async Task<ActionResult<List<Note>>> Get(string id)
         {
             var patientVisits = await _historyService.GetAsync(id);
@@ -36,9 +33,9 @@ namespace Mediscreen.HistoryAPI.Controllers
 
             return patientVisits;
         }
-        // POST api/<PatientsController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Note newNote)
+        // POST api/patients/{id}/history
+        [HttpPost("{id}/history")]
+        public async Task<IActionResult> Post(string id, [FromBody] Note newNote)
         {
             if (!ModelState.IsValid)
             {
@@ -51,9 +48,8 @@ namespace Mediscreen.HistoryAPI.Controllers
             }
 
             await _historyService.CreateAsync(newNote);
-            
+
             return CreatedAtAction(nameof(Get), new { id = newNote.Id }, newNote);
         }
-
     }
 }

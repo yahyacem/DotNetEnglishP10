@@ -37,11 +37,11 @@ namespace Mediscreen.AssessmentAPI.Controllers
             return _assessmentService.GetAssessment(patient, await _assessmentService.CheckTriggers(patient.Id!));
         }
         // POST api/<AssessmentController>/Trigger
-        [HttpGet("Trigger/{term}")]
-        public async Task<IActionResult> Post(string term)
-        {
-            await _triggerTermsService.CreateAsync(term);
-            return Ok();
-        }
+        //[HttpGet("Trigger/{term}")]
+        //public async Task<IActionResult> Post(string term)
+        //{
+        //    await _triggerTermsService.CreateAsync(term);
+        //    return Ok();
+        //}
     }
 }

@@ -21,7 +21,6 @@ namespace Mediscreen.WebApp.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
         [DisplayName("Sex")]
-        [StringLength(1, MinimumLength = 1,  ErrorMessage = "Sex can only be M or F")]
         [Required]
         public string Sex { get; set; } = null!;
         [DisplayName("Home address")]

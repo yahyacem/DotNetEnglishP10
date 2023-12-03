@@ -82,7 +82,7 @@ namespace Mediscreen.WebApp.Services
 
             var historyResponse = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options => 
             { 
-                options.RelativePath = $"api/history/{id}";
+                options.RelativePath = $"api/patients/{id}/history";
                 options.Scopes = new[] { _constantsService.Scopes["HistoryAPI"] };
             });
             if (historyResponse.IsSuccessStatusCode)
@@ -149,7 +149,7 @@ namespace Mediscreen.WebApp.Services
 
             var response = await _downstreamApi.CallApiForAppAsync("GatewayAPI", options =>
             {
-                options.RelativePath = "api/history";
+                options.RelativePath = $"api/patients/{newNote.PatientId}/history";
                 options.HttpMethod = "POST";
                 options.Scopes = new[] { _constantsService.Scopes["HistoryAPI"] };
             }, requestContent);

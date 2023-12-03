@@ -58,8 +58,8 @@ namespace Mediscreen.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,GivenName,FamilyName,DateOfBirth,Sex,HomeAddress,PhoneNumber")] PatientViewModel patientViewModel)
         {
-            if (patientViewModel.Sex != "M" || patientViewModel.Sex != "F")
-                ModelState.AddModelError("Sex", "Please, provide a valid sex (M or F)");
+            //if (patientViewModel.Sex != "M" || patientViewModel.Sex != "F")
+            //    ModelState.AddModelError("Sex", "Please, provide a valid sex (M or F)");
 
             if (!ModelState.IsValid)
                 return View();
@@ -102,8 +102,8 @@ namespace Mediscreen.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,GivenName,FamilyName,DateOfBirth,Sex,HomeAddress,PhoneNumber")] PatientViewModel patientViewModel)
         {
-            if (patientViewModel.Sex != "M" || patientViewModel.Sex != "F")
-                ModelState.AddModelError("Sex", "Please, provide a valid sex (M or F)");
+            //if (patientViewModel.Sex != "M" || patientViewModel.Sex != "F")
+            //    ModelState.AddModelError("Sex", "Please, provide a valid sex (M or F)");
 
             if (!ModelState.IsValid)
                 return View();

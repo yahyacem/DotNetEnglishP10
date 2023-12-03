@@ -37,7 +37,7 @@
 
     // History API
     {
-      "DownstreamPathTemplate": "/api/history/{id}",
+      "DownstreamPathTemplate": "/api/patients/{id}/history",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -45,7 +45,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/history/{id}",
+      "UpstreamPathTemplate": "/api/patients/{id}/history",
       "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
